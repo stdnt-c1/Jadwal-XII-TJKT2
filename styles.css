@@ -1,0 +1,189 @@
+/* === Custom Styles dari Inline CSS === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Base transitions for theme switching */
+body * {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  padding: 2rem;
+}
+
+/* Responsive text sizing */
+.text-2xl {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+}
+
+.text-3xl {
+  font-size: clamp(1.875rem, 2.5vw + 1rem, 2.25rem);
+}
+
+.text-4xl {
+  font-size: clamp(2.25rem, 3vw + 1rem, 2.5rem);
+}
+
+.text-5xl {
+  font-size: clamp(3rem, 4vw + 1rem, 3.75rem);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.current-class {
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3),
+              0 4px 6px -2px rgba(79, 70, 229, 0.1);
+  animation: slideIn 0.5s ease-out;
+}
+
+.next-class {
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3),
+              0 4px 6px -2px rgba(16, 185, 129, 0.1);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 3px;
+  transition: width 1s linear;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 200%;
+  }
+}
+
+.schedule-day {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.schedule-day:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.active-day {
+  border-left: 4px solid #4f46e5;
+  background-color: #eef2ff;
+}
+
+/* === Mobile Responsiveness === */
+.schedule-day h5 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+@media (max-width: 640px) {
+  .schedule-header {
+    font-size: 1rem;
+  }
+  
+  .current-time {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 4vw, 1.25rem);
+  }
+  
+  .schedule-day {
+    min-width: 0;
+  }
+  
+  .schedule-day h5 {
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+  }
+  
+  .schedule-day .flex {
+    flex-wrap: wrap;
+  }
+  
+  .schedule-day .inline-block {
+    margin-top: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* === Styles Tambahan dari file style.css yang sudah ada === */
+h1 {
+  font-size: 16px;
+  margin-top: 0;
+}
+
+p {
+  color: rgb(107, 114, 128);
+  font-size: 15px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.card {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 16px;
+  border: 1px solid lightgray;
+  border-radius: 16px;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}

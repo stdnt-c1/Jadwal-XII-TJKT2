@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JADWAL KELAS XII TJKT 2</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-white text-gray-900">
+  <!-- Header Section -->
+  <header class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-8 px-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-2xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+        JADWAL KELAS XII TJKT 2
+      </h1>
+      <p class="text-sm mt-2 text-indigo-100">SMKN 7 Samarinda</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8"><!-- Weekly Schedule Section -->
+    <div>
+      <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+        <i class="far fa-calendar-alt mr-2 text-blue-600"></i> Jadwal Mingguan
+      </h3>
+      
+      <!-- Day Navigation -->
+      <div class="flex overflow-x-auto mb-4 pb-2 hide-scrollbar">
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-indigo-100 text-indigo-700 font-medium active-day" data-day="0">Senin</button>
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-gray-100 text-gray-700 font-medium" data-day="1">Selasa</button>
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-gray-100 text-gray-700 font-medium" data-day="2">Rabu</button>
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-gray-100 text-gray-700 font-medium" data-day="3">Kamis</button>
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-gray-100 text-gray-700 font-medium" data-day="4">Jumat</button>
+        <button class="day-btn px-4 py-2 rounded-lg mr-2 bg-gray-100 text-gray-700 font-medium" data-day="5">Sabtu</button>
+        <button class="day-btn px-4 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium" data-day="6">Minggu</button>
+      </div>
+      
+      <!-- Schedule Content -->
+      <div id="schedule-content" class="bg-white rounded-xl p-6">
+        <!-- Schedule akan di-load melalui JavaScript -->
+        <div class="text-center py-8">
+          <i class="fas fa-spinner fa-spin text-3xl text-gray-400"></i>
+          <p class="mt-2 text-gray-500">Memuat jadwal...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Uniform Schedule Section -->
+    <div class="container mx-auto px-4 pb-8">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-tshirt mr-2 text-purple-600"></i> Jadwal Seragam
+      </h3>
+      <div class="bg-white rounded-xl p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Senin</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Atasan Putih, Bawahan Abu-abu</p>
+          </div>
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Selasa</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Atasan Icon/Hitam, Bawahan Cream</p>
+          </div>
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Rabu</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Atasan Jurusan, Bawahan Hitam</p>
+          </div>
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Kamis</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Atasan Batik, Bawahan Putih</p>
+          </div>
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Jum'at</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Seragam Pramuka</p>
+          </div>
+          <div class="p-4 rounded-lg bg-gray-50">
+            <div class="flex items-center">
+              <span class="text-lg font-semibold text-gray-800">Minggu</span>
+              <div class="h-px flex-1 mx-3 bg-gray-200"></div>
+            </div>
+            <p class="mt-2 text-gray-600">Atasan P5/Biru, Bawahan Hitam</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="bg-gray-50 py-6 mt-8">
+    <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+      <p>© 2025 Jadwal Kelas Digital XII TJKT 2 | SMKN 7 Samarinda</p>
+      <p class="mt-1">*Jadwal ini bersifat statis untuk informasi umum</p>
+    </div>
+  </footer>
+
+  <!-- Notification Container -->
+  <div id="notification-container" class="fixed bottom-4 left-4 z-50"></div>
+
+  <!-- Custom Script -->
+  <script src="script.js"></script>
+</body>
+</html>

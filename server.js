@@ -4,12 +4,12 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the 'Jadwal Kelas XI TJKT 2' directory
-app.use(express.static(path.join(__dirname, 'Jadwal Kelas XI TJKT 2')));
+// Serve static files from root directory
+app.use(express.static(__dirname));
 
 // Fallback route to serve index.html for any unmatched routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Jadwal Kelas XI TJKT 2', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start server
