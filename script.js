@@ -12,14 +12,14 @@ const dayEndTimes = {
 
 const scheduleData = {
   monday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:15" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:15" },
     { subject: "Upacara Bendera", teacher: "", start: "07:15", end: "07:55" },
     { subject: "Pendidikan Agama Islam", teacher: "Aminah Tajudin, S.Pd.I", start: "07:55", end: "09:55" },
     { subject: "Istirahat", teacher: "", start: "09:55", end: "10:10" },
     { subject: "Keamanan Jaringan", teacher: "Nugraha Saputra, S.Kom", start: "10:10", end: "12:50" }
   ],
   tuesday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:00" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:00" },
     { subject: "Pembinaan Karakter", teacher: "", start: "07:00", end: "07:15" },
     { subject: "B. Indonesia", teacher: "M. Agus Kastiyawan, S.Pd., MPd", start: "07:15", end: "09:15" },
     { subject: "PKK", teacher: "Hj. Darnilawati, S.Kom., M.Sos", start: "09:15", end: "09:55" },
@@ -27,14 +27,14 @@ const scheduleData = {
     { subject: "PKK", teacher: "Hj. Darnilawati, S.Kom., M.Sos", start: "10:10", end: "12:50" }
   ],
   wednesday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:00" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:00" },
     { subject: "Pembinaan Karakter", teacher: "", start: "07:00", end: "07:15" },
     { subject: "Mata Pelajaran Pilihan", teacher: "", start: "07:15", end: "09:55" },
     { subject: "Istirahat", teacher: "", start: "09:55", end: "10:10" },
     { subject: "ASJ", teacher: "Rama Saputra, S.Kom", start: "10:10", end: "12:50" }
   ],
   thursday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:00" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:00" },
     { subject: "Pembinaan Karakter", teacher: "", start: "07:00", end: "07:15" },
     { subject: "PKJ", teacher: "Sigit Triyanto, S.Pd", start: "07:15", end: "09:55" },
     { subject: "Istirahat", teacher: "", start: "09:55", end: "10:10" },
@@ -42,7 +42,7 @@ const scheduleData = {
     { subject: "B. Inggris", teacher: "Nuh Lenjau, M.Pd", start: "11:30", end: "12:50" }
   ],
   friday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:15" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:15" },
     { subject: "Pendidikan Pancasila", teacher: "Juanda, S.Pd", start: "07:15", end: "08:25" },
     { subject: "TJKN", teacher: "Abdul Haris, S.Kom", start: "08:25", end: "09:35" },
     { subject: "Istirahat", teacher: "", start: "09:35", end: "09:50" },
@@ -50,7 +50,7 @@ const scheduleData = {
     { subject: "Pendidikan Agama non-Islam", teacher: "", start: "11:35", end: "13:00" }
   ],
   saturday: [
-    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "", end: "07:15" },
+    { subject: "Bersiap Masuk Sekolah!", teacher: "", start: "...", end: "07:15" },
     { subject: "P2J", teacher: "Sigit Triyanto, S.Pd", start: "07:15", end: "09:45" },
     { subject: "Istirahat", teacher: "", start: "09:45", end: "10:05" },
     { subject: "B. Inggris", teacher: "Nuh Lenjau, M.Pd", start: "10:05", end: "11:05" },
