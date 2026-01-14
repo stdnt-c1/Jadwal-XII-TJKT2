@@ -63,15 +63,21 @@ const uniforms = {
   sunday: "Libur"
 };
 
-// DOM elements
-const scheduleContentEl = document.getElementById('schedule-content');
-const dayButtons = document.querySelectorAll('.day-btn');
-const uniformsEl = document.getElementById('uniforms-content');
-
 // Load static schedule for day
 function loadSchedule(dayIndex) {
+  const scheduleContentEl = document.getElementById('schedule-content');
+  if (!scheduleContentEl) {
+    console.error('Schedule content element not found');
+    return;
+  }
+  
   const dayKey = dayKeys[dayIndex];
   const daySchedule = scheduleData[dayKey];
+  
+  if (!daySchedule) {
+    console.error('No schedule data for day:', dayIndex);
+    return;
+  }
   
   let html = `
     <h4 class="text-xl font-bold text-gray-800 mb-4">${days[dayIndex]}</h4>
@@ -103,6 +109,12 @@ function loadSchedule(dayIndex) {
 
 // Initialize day buttons with event listeners
 function initDayButtons() {
+  const dayButtons = document.querySelectorAll('.day-btn');
+  if (!dayButtons || dayButtons.length === 0) {
+    console.error('Day buttons not found');
+    return;
+  }
+  
   dayButtons.forEach(button => {
     button.addEventListener('click', () => {
       dayButtons.forEach(btn => {
@@ -115,13 +127,20 @@ function initDayButtons() {
       loadSchedule(dayIndex);
     });
   });
+  
   // Load Monday by default
-  dayButtons[0].click();
+  if (dayButtons[0]) {
+    dayButtons[0].click();
+  }
 }
 
 // Initialize app - static only
 function init() {
-  initDayButtons();
+  try {
+    initDayButtons();
+  } catch (error) {
+    console.error('Initialization error:', error);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
