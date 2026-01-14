@@ -63,8 +63,146 @@ const uniforms = {
   sunday: "Libur"
 };
 
+// WITA Clock (UTC+8) variables
+let witaTime = null;
+let clockInterval = null;
+let currentViewingDay = 0;
+
+// Get current WITA time
+function getWITATime() {
+  const now = new Date();
+  // Convert to WITA (UTC+8) using Intl API
+  const witaOptions = { timeZone: 'Asia/Makassar' };
+  const witaString = now.toLocaleString('en-US', witaOptions);
+  return new Date(witaString);
+}
+
+// Format time as HH:MM:SS
+function formatTime(date) {
+  return date.toLocaleTimeString('id-ID', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+}
+
+// Format date as "Hari, DD MMMM YYYY"
+function formatDate(date) {
+  const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  const dayName = dayNames[date.getDay()];
+  const day = date.getDate();
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${dayName}, ${day} ${month} ${year}`;
+}
+
+// Get current day index (0=Monday, 6=Sunday)
+function getCurrentDayIndex() {
+  const wita = getWITATime();
+  const jsDay = wita.getDay(); // 0=Sunday, 6=Saturday
+  // Convert to our format: 0=Monday, 6=Sunday
+  return jsDay === 0 ? 6 : jsDay - 1;
+}
+
+// Parse time string to minutes since midnight
+function parseTimeToMinutes(timeStr) {
+  if (timeStr.startsWith('<')) {
+    timeStr = timeStr.substring(1);
+  }
+  const parts = timeStr.split(':');
+  return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+}
+
+// Check if current time is within a schedule item
+function isCurrentSchedule(classItem) {
+  const wita = getWITATime();
+  const currentMinutes = wita.getHours() * 60 + wita.getMinutes();
+  const currentDayIndex = getCurrentDayIndex();
+  
+  // Only highlight if viewing today's schedule
+  if (currentViewingDay !== currentDayIndex) {
+    return false;
+  }
+  
+  let startMinutes = parseTimeToMinutes(classItem.start);
+  const endMinutes = parseTimeToMinutes(classItem.end);
+  
+  // Handle "Bersiap" which starts from 00:00 effectively
+  if (classItem.start.startsWith('<')) {
+    startMinutes = 0;
+  }
+  
+  return currentMinutes >= startMinutes && currentMinutes < endMinutes;
+}
+
+// Update clock display
+function updateClock() {
+  const wita = getWITATime();
+  const clockDateEl = document.getElementById('clock-date');
+  const clockTimeEl = document.getElementById('clock-time');
+  
+  if (clockDateEl) clockDateEl.textContent = formatDate(wita);
+  if (clockTimeEl) clockTimeEl.textContent = formatTime(wita);
+  
+  // Update day indicators
+  updateDayIndicators();
+  
+  // Refresh schedule highlighting if viewing today
+  if (currentViewingDay === getCurrentDayIndex()) {
+    highlightCurrentSchedule();
+  }
+}
+
+// Update day button indicators (green for today, red for others)
+function updateDayIndicators() {
+  const currentDayIndex = getCurrentDayIndex();
+  const dayButtons = document.querySelectorAll('.day-btn');
+  
+  dayButtons.forEach((btn, index) => {
+    const indicator = btn.querySelector('.day-indicator');
+    if (indicator) {
+      if (index === currentDayIndex) {
+        indicator.classList.remove('bg-red-500');
+        indicator.classList.add('bg-green-500', 'animate-pulse');
+      } else {
+        indicator.classList.remove('bg-green-500', 'animate-pulse');
+        indicator.classList.add('bg-red-500');
+      }
+    }
+  });
+}
+
+// Highlight current schedule item
+function highlightCurrentSchedule() {
+  const scheduleItems = document.querySelectorAll('.schedule-item');
+  const dayKey = dayKeys[currentViewingDay];
+  const daySchedule = scheduleData[dayKey];
+  
+  scheduleItems.forEach((item, index) => {
+    const classData = daySchedule[index];
+    if (classData && isCurrentSchedule(classData)) {
+      item.classList.add('current-schedule-highlight');
+    } else {
+      item.classList.remove('current-schedule-highlight');
+    }
+  });
+}
+
+// Initialize clock (fetch once, then continue client-side)
+function initClock() {
+  // Initial update
+  updateClock();
+  
+  // Update every second
+  clockInterval = setInterval(updateClock, 1000);
+}
+
 // Load static schedule for day
 function loadSchedule(dayIndex) {
+  currentViewingDay = dayIndex;
   console.log('loadSchedule called with dayIndex:', dayIndex);
   const scheduleContentEl = document.getElementById('schedule-content');
   if (!scheduleContentEl) {
@@ -83,23 +221,33 @@ function loadSchedule(dayIndex) {
   }
   
   console.log('Loading schedule for', days[dayIndex], 'with', daySchedule.length, 'items');
+  const currentDayIndex = getCurrentDayIndex();
+  const isToday = dayIndex === currentDayIndex;
   
   let html = `
-    <h4 class="text-xl font-bold text-gray-800 mb-4">${days[dayIndex]}</h4>
+    <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+      ${days[dayIndex]}
+      ${isToday ? '<span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Hari Ini</span>' : ''}
+    </h4>
     <div class="space-y-4">
   `;
   
-  daySchedule.forEach((classItem) => {
+  daySchedule.forEach((classItem, index) => {
     const isBreak = classItem.subject.toLowerCase().includes('istirahat');
+    const isCurrent = isCurrentSchedule(classItem);
+    
     html += `
-      <div class="schedule-day p-4 rounded-lg border ${isBreak ? 'border-gray-200 bg-gray-50' : 'border-gray-200'}">
+      <div class="schedule-item p-4 rounded-lg border transition-all duration-300 ${isBreak ? 'border-gray-200 bg-gray-50' : 'border-gray-200'} ${isCurrent ? 'current-schedule-highlight' : ''}" data-index="${index}">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-          <div class="mb-2 md:mb-0">
-            <h5 class="font-semibold ${isBreak ? 'text-gray-600' : 'text-gray-800'}">${classItem.subject}</h5>
-            ${classItem.teacher ? `<p class="text-sm text-gray-600 mt-1">${classItem.teacher}</p>` : ''}
+          <div class="mb-2 md:mb-0 flex items-center">
+            ${isCurrent ? '<span class="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></span>' : ''}
+            <div>
+              <h5 class="font-semibold ${isBreak ? 'text-gray-600' : 'text-gray-800'}">${classItem.subject}</h5>
+              ${classItem.teacher ? `<p class="text-sm text-gray-600 mt-1">${classItem.teacher}</p>` : ''}
+            </div>
           </div>
           <div class="flex items-center">
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium ${isBreak ? 'bg-gray-200 text-gray-700' : 'bg-indigo-100 text-indigo-800'}">
+            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium ${isBreak ? 'bg-gray-200 text-gray-700' : isCurrent ? 'bg-green-100 text-green-800' : 'bg-indigo-100 text-indigo-800'}">
               ${classItem.start} - ${classItem.end}
             </span>
           </div>
@@ -138,10 +286,11 @@ function initDayButtons() {
     });
   });
   
-  // Load Monday by default
-  console.log('Loading Monday by default');
-  if (dayButtons[0]) {
-    dayButtons[0].click();
+  // Load current day by default (or Monday if Sunday)
+  const currentDayIndex = getCurrentDayIndex();
+  console.log('Loading current day:', days[currentDayIndex]);
+  if (dayButtons[currentDayIndex]) {
+    dayButtons[currentDayIndex].click();
   }
 }
 
@@ -149,6 +298,7 @@ function initDayButtons() {
 function init() {
   console.log('Initialization starting...');
   try {
+    initClock();
     initDayButtons();
     console.log('Initialization completed successfully');
   } catch (error) {

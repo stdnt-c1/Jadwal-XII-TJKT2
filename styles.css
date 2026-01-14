@@ -15,6 +15,42 @@ body {
   padding: 2rem;
 }
 
+/* Current Schedule Highlight with Green Glow Pulse */
+.current-schedule-highlight {
+  border-color: #22c55e !important;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(34, 197, 94, 0.1) 100%) !important;
+  animation: greenGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes greenGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.3),
+                0 0 10px rgba(34, 197, 94, 0.2),
+                0 0 15px rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5),
+                0 0 20px rgba(34, 197, 94, 0.3),
+                0 0 30px rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* Day indicator pulse animation */
+.day-indicator.animate-pulse {
+  animation: indicatorPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes indicatorPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
 /* Responsive text sizing */
 .text-2xl {
   font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
