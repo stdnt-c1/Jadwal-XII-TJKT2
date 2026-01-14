@@ -119,6 +119,10 @@ function getCurrentDayIndex() {
 
 // Parse time string to minutes since midnight
 function parseTimeToMinutes(timeStr) {
+  // Handle '...' as 01:00 for internal calculations
+  if (timeStr === '...') {
+    timeStr = '01:00';
+  }
   const parts = timeStr.split(':');
   return parseInt(parts[0]) * 60 + parseInt(parts[1]);
 }
@@ -269,7 +273,7 @@ function loadSchedule(dayIndex) {
           </div>
           <div class="flex items-center">
             <span class="inline-block px-3 py-1 rounded-full text-sm font-medium ${isBreak ? 'bg-gray-200 text-gray-700' : isCurrent ? 'bg-green-100 text-green-800' : 'bg-indigo-100 text-indigo-800'}">
-              ${isBersiap ? '' : classItem.start} - ${classItem.end}
+              ${classItem.start} - ${classItem.end}
             </span>
           </div>
         </div>
