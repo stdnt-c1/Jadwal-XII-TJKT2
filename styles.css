@@ -56,6 +56,28 @@ body {
   overflow: visible;
 }
 
+/* Mobile block status for day buttons (replaces dots on small screens) */
+@media (max-width: 639px) {
+  .day-btn.today-block {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    color: white !important;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+  }
+  
+  .day-btn.today-block.active-day {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+  }
+  
+  .day-btn.other-day-block {
+    border: 2px solid #ef4444 !important;
+  }
+  
+  .day-btn.other-day-block.active-day {
+    border-color: #4f46e5 !important;
+    background-color: #eef2ff !important;
+  }
+}
+
 /* Hide all scrollbars */
 .hide-scrollbar {
   -ms-overflow-style: none;

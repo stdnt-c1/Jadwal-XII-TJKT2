@@ -181,12 +181,16 @@ function updateClock() {
 }
 
 // Update day button indicators (green for today, red for others)
+// On mobile: uses block highlighting instead of dots
 function updateDayIndicators() {
   const currentDayIndex = getCurrentDayIndex();
   const dayButtons = document.querySelectorAll('.day-btn');
+  const isMobile = window.innerWidth < 640;
   
   dayButtons.forEach((btn, index) => {
     const indicator = btn.querySelector('.day-indicator');
+    
+    // Update dot indicators (visible on desktop)
     if (indicator) {
       if (index === currentDayIndex) {
         indicator.classList.remove('bg-red-500');
@@ -195,6 +199,14 @@ function updateDayIndicators() {
         indicator.classList.remove('bg-green-500', 'animate-pulse');
         indicator.classList.add('bg-red-500');
       }
+    }
+    
+    // Update block status classes (visible on mobile)
+    btn.classList.remove('today-block', 'other-day-block');
+    if (index === currentDayIndex) {
+      btn.classList.add('today-block');
+    } else {
+      btn.classList.add('other-day-block');
     }
   });
 }
