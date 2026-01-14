@@ -65,19 +65,24 @@ const uniforms = {
 
 // Load static schedule for day
 function loadSchedule(dayIndex) {
+  console.log('loadSchedule called with dayIndex:', dayIndex);
   const scheduleContentEl = document.getElementById('schedule-content');
   if (!scheduleContentEl) {
     console.error('Schedule content element not found');
     return;
   }
   
+  console.log('Found schedule-content element:', scheduleContentEl);
+  
   const dayKey = dayKeys[dayIndex];
   const daySchedule = scheduleData[dayKey];
   
   if (!daySchedule) {
-    console.error('No schedule data for day:', dayIndex);
+    console.error('No schedule data for day:', dayIndex, 'dayKey:', dayKey);
     return;
   }
+  
+  console.log('Loading schedule for', days[dayIndex], 'with', daySchedule.length, 'items');
   
   let html = `
     <h4 class="text-xl font-bold text-gray-800 mb-4">${days[dayIndex]}</h4>
@@ -104,12 +109,17 @@ function loadSchedule(dayIndex) {
   });
   
   html += `</div>`;
+  console.log('Setting innerHTML with generated HTML');
   scheduleContentEl.innerHTML = html;
+  console.log('Schedule loaded successfully');
 }
 
 // Initialize day buttons with event listeners
 function initDayButtons() {
+  console.log('initDayButtons called');
   const dayButtons = document.querySelectorAll('.day-btn');
+  console.log('Found', dayButtons.length, 'day buttons');
+  
   if (!dayButtons || dayButtons.length === 0) {
     console.error('Day buttons not found');
     return;
@@ -129,6 +139,7 @@ function initDayButtons() {
   });
   
   // Load Monday by default
+  console.log('Loading Monday by default');
   if (dayButtons[0]) {
     dayButtons[0].click();
   }
@@ -136,11 +147,14 @@ function initDayButtons() {
 
 // Initialize app - static only
 function init() {
+  console.log('Initialization starting...');
   try {
     initDayButtons();
+    console.log('Initialization completed successfully');
   } catch (error) {
     console.error('Initialization error:', error);
   }
 }
 
+console.log('Script.js loaded, waiting for DOMContentLoaded');
 document.addEventListener('DOMContentLoaded', init);
