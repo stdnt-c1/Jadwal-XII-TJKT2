@@ -27,11 +27,12 @@ jobs:
       
       - name: Verify build
         run: |
-          echo "Verifying static files..."
+          echo "Verifying static files and API..."
           test -f index.html || exit 1
           test -f script.js || exit 1
           test -f styles.css || exit 1
-          echo "✓ All static files present"
+          test -f api/index.js || exit 1
+          echo "✓ All required files present"
       
       - name: Install Vercel CLI
         run: npm install --global vercel@33
