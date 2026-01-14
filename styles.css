@@ -51,6 +51,59 @@ body {
   }
 }
 
+/* Day navigation container - no scrollbar */
+.day-nav-container {
+  overflow: visible;
+}
+
+/* Hide all scrollbars */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Berlanjut Besok animated arrows */
+.arrow-container {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  font-size: 1.25rem;
+  font-weight: bold;
+  opacity: 0.3;
+  margin-left: -2px;
+}
+
+.arrow-1 {
+  animation: arrowShift 1.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.arrow-2 {
+  animation: arrowShift 1.5s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.arrow-3 {
+  animation: arrowShift 1.5s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes arrowShift {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+}
+
 /* Responsive text sizing */
 .text-2xl {
   font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
