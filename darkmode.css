@@ -21,6 +21,11 @@ body.dark {
   color: #f1f5f9;
 }
 
+/* Theme Toggle Bar (Mobile) Dark Mode */
+.dark #theme-toggle-bar {
+  background: linear-gradient(to right, #1e1b4b, #312e81) !important;
+}
+
 /* Header gradient for dark mode - deeper, richer purple */
 .dark header.bg-gradient-to-r {
   background: linear-gradient(135deg, #312e81 0%, #4c1d95 100%) !important;

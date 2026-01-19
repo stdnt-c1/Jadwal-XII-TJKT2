@@ -474,9 +474,7 @@ function init() {
 // Theme Toggle Functionality
 function initThemeToggle() {
   const themeToggle = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-  
-  if (!themeToggle || !themeIcon) return;
+  const themeToggleMobile = document.getElementById('theme-toggle-mobile');
   
   // Check for saved theme preference or system preference
   const savedTheme = localStorage.getItem('theme');
@@ -486,13 +484,15 @@ function initThemeToggle() {
     enableDarkMode();
   }
   
-  themeToggle.addEventListener('click', () => {
-    if (document.body.classList.contains('dark')) {
-      disableDarkMode();
-    } else {
-      enableDarkMode();
-    }
-  });
+  // Desktop toggle
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+  
+  // Mobile toggle
+  if (themeToggleMobile) {
+    themeToggleMobile.addEventListener('click', toggleTheme);
+  }
   
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
@@ -506,23 +506,59 @@ function initThemeToggle() {
   });
 }
 
+function toggleTheme() {
+  if (document.body.classList.contains('dark')) {
+    disableDarkMode();
+  } else {
+    enableDarkMode();
+  }
+}
+
 function enableDarkMode() {
   document.body.classList.add('dark');
+  
+  // Desktop icon
   const themeIcon = document.getElementById('theme-icon');
   if (themeIcon) {
     themeIcon.classList.remove('fa-moon');
     themeIcon.classList.add('fa-sun');
   }
+  
+  // Mobile icon and label
+  const themeIconMobile = document.getElementById('theme-icon-mobile');
+  const themeLabelMobile = document.getElementById('theme-label-mobile');
+  if (themeIconMobile) {
+    themeIconMobile.classList.remove('fa-moon');
+    themeIconMobile.classList.add('fa-sun');
+  }
+  if (themeLabelMobile) {
+    themeLabelMobile.textContent = 'Terang';
+  }
+  
   localStorage.setItem('theme', 'dark');
 }
 
 function disableDarkMode() {
   document.body.classList.remove('dark');
+  
+  // Desktop icon
   const themeIcon = document.getElementById('theme-icon');
   if (themeIcon) {
     themeIcon.classList.remove('fa-sun');
     themeIcon.classList.add('fa-moon');
   }
+  
+  // Mobile icon and label
+  const themeIconMobile = document.getElementById('theme-icon-mobile');
+  const themeLabelMobile = document.getElementById('theme-label-mobile');
+  if (themeIconMobile) {
+    themeIconMobile.classList.remove('fa-sun');
+    themeIconMobile.classList.add('fa-moon');
+  }
+  if (themeLabelMobile) {
+    themeLabelMobile.textContent = 'Gelap';
+  }
+  
   localStorage.setItem('theme', 'light');
 }
 
