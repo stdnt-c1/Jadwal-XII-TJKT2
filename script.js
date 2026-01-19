@@ -570,7 +570,14 @@ function disableDarkMode() {
 // ASSIGNMENTS SECTION
 // ========================================
 
+// Firebase Realtime Database config (public read)
+const FB_DB_URL = 'https://assignments-rotating-db-default-rtdb.firebaseio.com';
+let assignmentsLoaded = false;
+
 async function loadAssignments() {
+  // Only fetch once
+  if (assignmentsLoaded) return;
+  
   const container = document.getElementById('assignments-container');
   const loading = document.getElementById('assignments-loading');
   const empty = document.getElementById('assignments-empty');
@@ -579,13 +586,40 @@ async function loadAssignments() {
   if (!container) return;
   
   try {
-    const response = await fetch('/api/assignments');
-    const result = await response.json();
+    // Fetch directly from Firebase Realtime Database (public read)
+    const response = await fetch(`${FB_DB_URL}/assignments.json`);
+    const data = await response.json();
+    
+    assignmentsLoaded = true;
     
     // Hide loading
     if (loading) loading.classList.add('hidden');
     
-    if (!result.success || !result.data || result.data.length === 0) {
+    if (!data || Object.keys(data).length === 0) {
+      if (empty) empty.classList.remove('hidden');
+      if (countEl) countEl.textContent = '0 tugas aktif';
+      return;
+    }
+    
+    // Convert object to array and filter
+    const now = new Date();
+    let assignments = Object.entries(data).map(([id, item]) => ({ id, ...item }));
+    
+    // Auto-mark expired based on deadline
+    assignments = assignments.map(a => {
+      const deadline = new Date(a.deadline);
+      if (a.status !== 'archived' && deadline < now) {
+        a.status = 'expired';
+      }
+      return a;
+    });
+    
+    // Filter out archived, sort by deadline
+    assignments = assignments
+      .filter(a => a.status !== 'archived')
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    
+    if (assignments.length === 0) {
       if (empty) empty.classList.remove('hidden');
       if (countEl) countEl.textContent = '0 tugas aktif';
       return;
@@ -595,19 +629,20 @@ async function loadAssignments() {
     if (empty) empty.classList.add('hidden');
     
     // Count active assignments
-    const activeCount = result.data.filter(a => a.status === 'active').length;
+    const activeCount = assignments.filter(a => a.status === 'active').length;
     if (countEl) countEl.textContent = `${activeCount} tugas aktif`;
     
     // Render assignments
-    renderAssignments(result.data, container);
+    renderAssignments(assignments, container);
     
   } catch (error) {
     console.error('Failed to load assignments:', error);
+    assignmentsLoaded = true; // Don't retry on error
     if (loading) loading.classList.add('hidden');
     if (empty) {
       empty.innerHTML = `
-        <i class="fas fa-exclamation-triangle text-4xl text-amber-400"></i>
-        <p class="mt-2 text-gray-500">Gagal memuat tugas</p>
+        <i class="fas fa-clipboard-check text-4xl text-gray-300"></i>
+        <p class="mt-2 text-gray-500">Tidak ada tugas</p>
       `;
       empty.classList.remove('hidden');
     }
@@ -677,11 +712,8 @@ function formatDate(date) {
   });
 }
 
-// Load assignments on page load
-setTimeout(loadAssignments, 1000);
-
-// Refresh assignments every 5 minutes
-setInterval(loadAssignments, 5 * 60 * 1000);
+// Load assignments once on page load
+setTimeout(loadAssignments, 500);
 
 console.log('Script.js loaded, waiting for DOMContentLoaded');
 document.addEventListener('DOMContentLoaded', init);
