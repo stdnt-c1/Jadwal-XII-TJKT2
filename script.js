@@ -308,13 +308,6 @@ function updateDayIndicators() {
     }
   });
 }
-/* Legacy function removed: simplified to just toggle 'today' class */
-      btn.classList.add('today-block');
-    } else {
-      btn.classList.add('other-day-block');
-    }
-  });
-}
 
 // Highlight current schedule item
 function highlightCurrentSchedule() {
