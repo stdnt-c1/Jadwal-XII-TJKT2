@@ -317,9 +317,13 @@ function highlightCurrentSchedule() {
   
   scheduleItems.forEach((item, index) => {
     const classData = daySchedule[index];
-    if (classData && isCurrentSchedule(classData)) {
+    const shouldHighlight = classData && isCurrentSchedule(classData);
+    const isHighlighted = item.classList.contains('current-schedule-highlight');
+    
+    // Only modify class if state actually changed to avoid animation reset
+    if (shouldHighlight && !isHighlighted) {
       item.classList.add('current-schedule-highlight');
-    } else {
+    } else if (!shouldHighlight && isHighlighted) {
       item.classList.remove('current-schedule-highlight');
     }
   });

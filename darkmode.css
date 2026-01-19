@@ -84,6 +84,15 @@ body.dark {
 .dark .text-gray-500 { color: #94a3b8 !important; }
 .dark .text-gray-400 { color: #64748b !important; }
 
+/* Blue and indigo text colors - lighter for dark mode */
+.dark .text-blue-600 { color: #60a5fa !important; }
+.dark .text-blue-700 { color: #93c5fd !important; }
+.dark .text-blue-800 { color: #bfdbfe !important; }
+.dark .text-indigo-600 { color: #818cf8 !important; }
+.dark .text-indigo-700 { color: #a5b4fc !important; }
+.dark .text-indigo-800 { color: #c7d2fe !important; }
+.dark .text-purple-600 { color: #a78bfa !important; }
+
 .dark p {
   color: #cbd5e1;
 }
