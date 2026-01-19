@@ -329,6 +329,26 @@ function highlightCurrentSchedule() {
   });
 }
 
+// Highlight today's uniform in the uniform schedule section
+function highlightTodayUniform() {
+  const uniformDays = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+  const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const todayKey = uniformDays[today];
+  
+  // Remove highlight from all uniform items first
+  document.querySelectorAll('.uniform-item').forEach(item => {
+    const isHighlighted = item.classList.contains('current-schedule-highlight');
+    const shouldHighlight = item.id === `uniform-${todayKey}`;
+    
+    // Only modify class if state actually changed to avoid animation reset
+    if (shouldHighlight && !isHighlighted) {
+      item.classList.add('current-schedule-highlight');
+    } else if (!shouldHighlight && isHighlighted) {
+      item.classList.remove('current-schedule-highlight');
+    }
+  });
+}
+
 // Initialize clock (fetch once, then continue client-side)
 function initClock() {
   // Initial update
@@ -469,6 +489,7 @@ function init() {
     initClock();
     initDayButtons();
     initThemeToggle();
+    highlightTodayUniform();
     console.log('Initialization completed successfully');
   } catch (error) {
     console.error('Initialization error:', error);

@@ -209,7 +209,8 @@ body.dark {
 /* Current schedule highlight in dark mode - smooth left-to-right gradient glow */
 .dark .current-schedule-highlight,
 .dark .schedule-day.current-schedule-highlight,
-.dark .schedule-item.current-schedule-highlight {
+.dark .schedule-item.current-schedule-highlight,
+.dark .uniform-item.current-schedule-highlight {
   border: none !important;
   position: relative;
   overflow: hidden;
@@ -218,7 +219,8 @@ body.dark {
 
 .dark .current-schedule-highlight::before,
 .dark .schedule-day.current-schedule-highlight::before,
-.dark .schedule-item.current-schedule-highlight::before {
+.dark .schedule-item.current-schedule-highlight::before,
+.dark .uniform-item.current-schedule-highlight::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -234,7 +236,8 @@ body.dark {
 
 .dark .current-schedule-highlight::after,
 .dark .schedule-day.current-schedule-highlight::after,
-.dark .schedule-item.current-schedule-highlight::after {
+.dark .schedule-item.current-schedule-highlight::after,
+.dark .uniform-item.current-schedule-highlight::after {
   content: '';
   position: absolute;
   left: 0;

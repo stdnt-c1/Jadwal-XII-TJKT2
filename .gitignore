@@ -23,3 +23,6 @@ Thumbs.db
 
 # Reference folder (submodule)
 reference/
+
+# Example scripts (not for production)
+examples/

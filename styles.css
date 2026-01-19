@@ -69,6 +69,11 @@ header .bg-white\/20 {
   animation: highlightGlowPulse 2.5s ease-in-out infinite;
 }
 
+.current-schedule-highlight > * {
+  position: relative;
+  z-index: 2;
+}
+
 .current-schedule-highlight::before {
   content: '';
   position: absolute;
