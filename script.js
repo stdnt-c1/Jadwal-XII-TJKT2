@@ -294,30 +294,21 @@ function setNoNextClass(subj, time, teacher, textIn) {
     if (textIn) textIn.textContent = "-";
 }
 
-// Update day button indicators (green for today, red for others)
-// On mobile: uses block highlighting instead of dots
+// Update day button indicators (styles handled by CSS now)
 function updateDayIndicators() {
   const currentDayIndex = getCurrentDayIndex();
   const dayButtons = document.querySelectorAll('.day-btn');
-  const isMobile = window.innerWidth < 640;
   
   dayButtons.forEach((btn, index) => {
-    const indicator = btn.querySelector('.day-indicator');
-    
-    // Update dot indicators (visible on desktop)
-    if (indicator) {
-      if (index === currentDayIndex) {
-        indicator.classList.remove('bg-red-500');
-        indicator.classList.add('bg-green-500', 'animate-pulse');
-      } else {
-        indicator.classList.remove('bg-green-500', 'animate-pulse');
-        indicator.classList.add('bg-red-500');
-      }
-    }
-    
-    // Update block status classes (visible on mobile)
-    btn.classList.remove('today-block', 'other-day-block');
+    // Add 'today' class if it matches current day
     if (index === currentDayIndex) {
+      btn.classList.add('today');
+    } else {
+      btn.classList.remove('today');
+    }
+  });
+}
+/* Legacy function removed: simplified to just toggle 'today' class */
       btn.classList.add('today-block');
     } else {
       btn.classList.add('other-day-block');

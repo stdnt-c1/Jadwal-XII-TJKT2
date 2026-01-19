@@ -99,65 +99,61 @@ header .bg-white\/20 {
 
 /* Day navigation container - horizontal scroll */
 .day-nav-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   padding: 0.5rem 0;
+  display: flex;
 }
 
 .day-nav-container::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
+  display: none;
 }
 
-/* Optional: Show subtle scrollbar on hover for desktop */
-@media (min-width: 640px) {
-  .day-nav-container {
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
-  }
-  
-  .day-nav-container::-webkit-scrollbar {
-    display: block;
-    height: 4px;
-  }
-  
-  .day-nav-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .day-nav-container::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1;
-    border-radius: 4px;
-  }
-  
-  .day-nav-container::-webkit-scrollbar-thumb:hover {
-    background-color: #94a3b8;
-  }
+/* Day Button Styling */
+.day-btn {
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Mobile block status for day buttons (replaces dots on small screens) */
-@media (max-width: 639px) {
-  .day-btn.today-block {
-    background-color: #dcfce7 !important;
-    color: #166534 !important;
-    border: 1.5px solid #86efac !important;
-  }
-  
-  .day-btn.today-block.active-day {
-    background-color: #bbf7d0 !important;
-    border-color: #4ade80 !important;
-    box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
-  }
-  
-  .day-btn.other-day-block {
-    border: 1.5px solid #fecaca !important;
-    background-color: #fef2f2 !important;
-  }
-  
-  .day-btn.other-day-block.active-day {
-    border-color: #a5b4fc !important;
-    background-color: #eef2ff !important;
-  }
+/* Hover State */
+.day-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+  color: #334155;
+}
+
+/* Currently Selected Day (Active) - Indigo Glow */
+.day-btn.active-day {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  color: #4338ca;
+  border-color: #818cf8;
+  box-shadow: inset 0 0 15px rgba(99, 102, 241, 0.2),
+              0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* Today Status - Green Glow (Applied via Script) */
+.day-btn.today {
+  box-shadow: inset 0 0 0 2px #4ade80, 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Combine Active + Today */
+.day-btn.active-day.today {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  color: #15803d;
+  border-color: #4ade80;
+  box-shadow: inset 0 0 15px rgba(34, 197, 94, 0.2),
+              0 4px 12px rgba(22, 163, 74, 0.25);
+}
+
+/* Mobile block overrides removed - using universal style */
+.day-btn.today-block,
+.day-btn.other-day-block {
+    /* Legacy classes retained but neutralized if script uses them */
 }
 
 /* Hide all scrollbars */

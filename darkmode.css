@@ -111,21 +111,41 @@ body.dark {
 
 /* Day buttons for dark mode */
 .dark .day-btn {
-  background-color: #334155;
-  color: #e2e8f0;
-  border-color: #475569;
+  background: #1e293b; /* Reset light gradient */
+  color: #94a3b8;
+  border-color: #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 .dark .day-btn:hover {
-  background-color: #475569;
+  background: #334155;
+  color: #e2e8f0;
 }
 
+/* Active Day in Dark Mode - Deep Indigo Glow */
 .dark .day-btn.active-day {
-  background-color: #4338ca !important;
-  color: #ffffff !important;
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%) !important;
+  color: #c7d2fe !important;
+  border-color: #4f46e5 !important;
+  box-shadow: inset 0 0 20px rgba(79, 70, 229, 0.4),
+              0 0 15px rgba(79, 70, 229, 0.25);
 }
+
+/* Today in Dark Mode - Deep Green Glow strategy */
+.dark .day-btn.today {
+  box-shadow: inset 0 0 0 1px #10b981;
+}
+
+/* Combine Active + Today in Dark Mode */
+.dark .day-btn.active-day.today {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 100%) !important;
+  color: #6ee7b7 !important;
+  border-color: #10b981 !important;
+  box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.4),
+              0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+/* Schedule day cards with glow effects */
 
 /* Schedule day cards with glow effects */
 .dark .schedule-day {
@@ -240,31 +260,10 @@ body.dark {
   }
 }
 
-/* Mobile block status for day buttons in dark mode */
-@media (max-width: 639px) {
-  .dark .day-btn.today-block {
-    background-color: #14532d !important;
-    color: #86efac !important;
-    border: 1.5px solid #22c55e !important;
-  }
-  
-  .dark .day-btn.today-block.active-day {
-    background-color: #166534 !important;
-    border-color: #4ade80 !important;
-    box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-  }
-  
-  .dark .day-btn.other-day-block {
-    border: 1.5px solid #7f1d1d !important;
-    background-color: #1f2937 !important;
-    color: #fecaca !important;
-  }
-  
-  .dark .day-btn.other-day-block.active-day {
-    border-color: #6366f1 !important;
-    background-color: #312e81 !important;
-    color: #c7d2fe !important;
-  }
+/* Mobile block overrides removed from light mode, ensure neutral here too */
+.dark .day-btn.today-block,
+.dark .day-btn.other-day-block {
+    /* Neutralized */
 }
 
 /* Notification styling in dark mode */
