@@ -283,6 +283,72 @@ body.dark {
   background-color: #475569;
 }
 
+/* === Assignments Section Dark Mode === */
+.dark #assignments-container {
+  scrollbar-color: #475569 transparent;
+}
+
+.dark #assignments-container::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark #assignments-container::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.dark .assignment-card {
+  background: linear-gradient(135deg, #422006 0%, #451a03 100%) !important;
+  border-color: #92400e !important;
+}
+
+.dark .assignment-card:hover {
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.1);
+}
+
+.dark .assignment-card .assignment-subject {
+  color: #fcd34d !important;
+}
+
+.dark .assignment-card .assignment-title {
+  color: #fef3c7 !important;
+}
+
+.dark .assignment-card .assignment-details,
+.dark .assignment-card .assignment-meta {
+  color: #d1d5db !important;
+}
+
+.dark .assignment-card.expired {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  border-color: #334155 !important;
+  opacity: 0.6;
+}
+
+.dark .assignment-card.expired .assignment-subject,
+.dark .assignment-card.expired .assignment-title {
+  color: #64748b !important;
+}
+
+.dark .assignment-status.active {
+  background: #14532d;
+  color: #86efac;
+}
+
+.dark .assignment-status.expired {
+  background: #1e293b;
+  color: #64748b;
+}
+
+.dark .assignment-status.urgent {
+  background: #450a0a;
+  color: #fca5a5;
+}
+
+.dark #assignments-empty i,
+.dark #assignments-loading i {
+  color: #475569 !important;
+}
+
 /* Footer */
 .dark footer.bg-gray-50 {
   background: #0f172a; /* Remove light mode gradient */

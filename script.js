@@ -566,5 +566,122 @@ function disableDarkMode() {
   localStorage.setItem('theme', 'light');
 }
 
+// ========================================
+// ASSIGNMENTS SECTION
+// ========================================
+
+async function loadAssignments() {
+  const container = document.getElementById('assignments-container');
+  const loading = document.getElementById('assignments-loading');
+  const empty = document.getElementById('assignments-empty');
+  const countEl = document.getElementById('assignments-count');
+  
+  if (!container) return;
+  
+  try {
+    const response = await fetch('/api/assignments');
+    const result = await response.json();
+    
+    // Hide loading
+    if (loading) loading.classList.add('hidden');
+    
+    if (!result.success || !result.data || result.data.length === 0) {
+      if (empty) empty.classList.remove('hidden');
+      if (countEl) countEl.textContent = '0 tugas aktif';
+      return;
+    }
+    
+    // Hide empty state
+    if (empty) empty.classList.add('hidden');
+    
+    // Count active assignments
+    const activeCount = result.data.filter(a => a.status === 'active').length;
+    if (countEl) countEl.textContent = `${activeCount} tugas aktif`;
+    
+    // Render assignments
+    renderAssignments(result.data, container);
+    
+  } catch (error) {
+    console.error('Failed to load assignments:', error);
+    if (loading) loading.classList.add('hidden');
+    if (empty) {
+      empty.innerHTML = `
+        <i class="fas fa-exclamation-triangle text-4xl text-amber-400"></i>
+        <p class="mt-2 text-gray-500">Gagal memuat tugas</p>
+      `;
+      empty.classList.remove('hidden');
+    }
+  }
+}
+
+function renderAssignments(assignments, container) {
+  // Clear existing (except loading/empty)
+  const cards = container.querySelectorAll('.assignment-card');
+  cards.forEach(card => card.remove());
+  
+  const now = new Date();
+  
+  assignments.forEach(assignment => {
+    const deadline = new Date(assignment.deadline);
+    const dateGiven = new Date(assignment.dateGiven);
+    const isExpired = assignment.status === 'expired';
+    const daysLeft = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+    const isUrgent = !isExpired && daysLeft <= 2 && daysLeft >= 0;
+    
+    // Status badge
+    let statusClass = 'active';
+    let statusText = `${daysLeft} hari lagi`;
+    
+    if (isExpired) {
+      statusClass = 'expired';
+      statusText = 'Lewat';
+    } else if (isUrgent) {
+      statusClass = 'urgent';
+      statusText = daysLeft === 0 ? 'Hari ini!' : `${daysLeft} hari lagi`;
+    }
+    
+    const card = document.createElement('div');
+    card.className = `assignment-card ${isExpired ? 'expired' : ''}`;
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="assignment-subject text-sm font-semibold text-amber-700">${escapeHtml(assignment.subject)}</span>
+            <span class="assignment-status ${statusClass}">${statusText}</span>
+          </div>
+          <h4 class="assignment-title font-medium text-gray-800 truncate">${escapeHtml(assignment.title)}</h4>
+          ${assignment.details ? `<p class="assignment-details text-sm text-gray-600 mt-1 line-clamp-2">${escapeHtml(assignment.details)}</p>` : ''}
+        </div>
+      </div>
+      <div class="assignment-meta flex items-center gap-4 mt-3 text-xs text-gray-500">
+        <span><i class="fas fa-user-tie mr-1"></i>${escapeHtml(assignment.teacher || '-')}</span>
+        <span><i class="fas fa-calendar-plus mr-1"></i>${formatDate(dateGiven)}</span>
+        <span><i class="fas fa-calendar-check mr-1"></i>${formatDate(deadline)}</span>
+      </div>
+    `;
+    
+    container.appendChild(card);
+  });
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'short'
+  });
+}
+
+// Load assignments on page load
+setTimeout(loadAssignments, 1000);
+
+// Refresh assignments every 5 minutes
+setInterval(loadAssignments, 5 * 60 * 1000);
+
 console.log('Script.js loaded, waiting for DOMContentLoaded');
 document.addEventListener('DOMContentLoaded', init);

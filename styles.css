@@ -503,6 +503,84 @@ p {
   transform: translateY(-2px);
 }
 
+/* === Assignments Section === */
+#assignments-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+#assignments-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+#assignments-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#assignments-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+#assignments-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Assignment Card */
+.assignment-card {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fcd34d;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.assignment-card:hover {
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Expired Assignment */
+.assignment-card.expired {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-color: #d1d5db;
+  opacity: 0.7;
+}
+
+.assignment-card.expired .assignment-subject,
+.assignment-card.expired .assignment-title {
+  color: #6b7280;
+}
+
+/* Assignment Status Badge */
+.assignment-status {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+.assignment-status.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.assignment-status.expired {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.assignment-status.urgent {
+  background: #fee2e2;
+  color: #dc2626;
+  animation: urgentPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 /* === Footer Enhancement === */
 footer.bg-gray-50 {
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);

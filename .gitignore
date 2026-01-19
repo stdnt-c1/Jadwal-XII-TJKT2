@@ -20,3 +20,6 @@ yarn-error.log*
 # OS specific
 .DS_Store
 Thumbs.db
+
+# Reference folder (submodule)
+reference/

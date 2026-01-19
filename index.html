@@ -144,6 +144,35 @@
       </div>
     </div>
 
+    <!-- Assignments Section -->
+    <div class="container mx-auto px-4 mt-8">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+          <i class="fas fa-tasks mr-2 text-amber-500"></i> Tugas
+        </h3>
+        <span id="assignments-count" class="text-sm text-gray-500">0 tugas aktif</span>
+      </div>
+      
+      <!-- Assignments Container - Scrollable Box -->
+      <div class="bg-white rounded-xl p-4 shadow-lg">
+        <div id="assignments-container" class="max-h-80 overflow-y-auto space-y-3 pr-2">
+          <!-- Loading State -->
+          <div id="assignments-loading" class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+            <p class="mt-2 text-gray-500 text-sm">Memuat tugas...</p>
+          </div>
+          
+          <!-- Empty State (hidden by default) -->
+          <div id="assignments-empty" class="text-center py-8 hidden">
+            <i class="fas fa-clipboard-check text-4xl text-gray-300"></i>
+            <p class="mt-2 text-gray-500">Tidak ada tugas saat ini</p>
+          </div>
+          
+          <!-- Assignments will be rendered here by JavaScript -->
+        </div>
+      </div>
+    </div>
+
     <!-- Uniform Schedule Section -->
     <div class="container mx-auto px-4 pb-8 mt-8">
       <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
