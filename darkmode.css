@@ -90,8 +90,9 @@ body.dark {
 
 /* Day navigation container */
 .dark .day-nav-container {
-  border-color: #334155;
-  background: #0f172a;
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 1rem;
 }
 
 /* Day navigation scrollbar for dark mode */
@@ -146,17 +147,17 @@ body.dark {
 }
 
 /* Schedule day cards with glow effects */
-
-/* Schedule day cards with glow effects */
-.dark .schedule-day {
-  background-color: #1e293b;
-  border-color: #334155;
+.dark .schedule-day,
+.dark .schedule-item {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dark .schedule-day:hover {
+.dark .schedule-day:hover,
+.dark .schedule-item:hover {
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
-  background-color: #293548;
+  background: #293548 !important;
   transform: translateY(-2px) scale(1.01);
 }
 
