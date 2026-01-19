@@ -46,8 +46,22 @@ body.dark {
 }
 
 /* Container backgrounds for dark mode */
+.dark .current-class,
+.dark .next-class,
 .dark .bg-white {
   background-color: #1e293b;
+}
+
+.dark .current-class {
+  border: 1px solid #334155;
+  border-left: 4px solid #6366f1 !important;
+  box-shadow: 0 4px 20px -5px rgba(99, 102, 241, 0.3);
+}
+
+.dark .next-class {
+  border: 1px solid #334155;
+  border-left: 4px solid #10b981 !important;
+  box-shadow: 0 4px 20px -5px rgba(16, 185, 129, 0.3);
 }
 
 .dark #schedule-content {

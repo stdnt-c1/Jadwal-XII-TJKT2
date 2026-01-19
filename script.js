@@ -178,6 +178,120 @@ function updateClock() {
   if (currentViewingDay === getCurrentDayIndex()) {
     highlightCurrentSchedule();
   }
+  
+  // Update dashboard info
+  updateDashboard();
+}
+
+// Update Dashboard (Current & Next Class)
+function updateDashboard() {
+  const wita = getWITATime();
+  const currentDayIndex = getCurrentDayIndex();
+  const currentDayKey = dayKeys[currentDayIndex];
+  const todaySchedule = scheduleData[currentDayKey];
+  
+  const currentMinutes = wita.getHours() * 60 + wita.getMinutes();
+  
+  // Elements
+  const currentSubjectEl = document.getElementById('current-subject');
+  const currentTimeRangeEl = document.getElementById('current-time-range');
+  const currentTeacherEl = document.getElementById('current-teacher');
+  const timeLeftEl = document.getElementById('time-left');
+  const progressFillEl = document.getElementById('progress-fill');
+  
+  const nextSubjectEl = document.getElementById('next-subject');
+  const nextTimeRangeEl = document.getElementById('next-time-range');
+  const nextTeacherEl = document.getElementById('next-teacher');
+  const nextInEl = document.getElementById('next-in');
+
+  if (!todaySchedule) return;
+
+  let foundCurrent = false;
+
+  for (let i = 0; i < todaySchedule.length; i++) {
+    const item = todaySchedule[i];
+    const startMin = parseTimeToMinutes(item.start);
+    const endMin = parseTimeToMinutes(item.end);
+
+    // If current time is within a class
+    if (currentMinutes >= startMin && currentMinutes < endMin) {
+      foundCurrent = true;
+      
+      // Update Current Class
+      if (currentSubjectEl) currentSubjectEl.textContent = item.subject;
+      if (currentTimeRangeEl) currentTimeRangeEl.textContent = `${item.start} - ${item.end} WITA`;
+      if (currentTeacherEl) currentTeacherEl.textContent = item.teacher || '-';
+      
+      // Calculate Progress & Time Left
+      const duration = endMin - startMin;
+      const elapsed = currentMinutes - startMin;
+      const progress = Math.min((elapsed / duration) * 100, 100);
+      const timeLeft = endMin - currentMinutes;
+
+      if (progressFillEl) progressFillEl.style.width = `${progress}%`;
+      if (timeLeftEl) timeLeftEl.textContent = `${timeLeft} Menit`;
+
+      // Find Next Class
+      if (i + 1 < todaySchedule.length) {
+        const nextItem = todaySchedule[i + 1];
+        if (nextSubjectEl) nextSubjectEl.textContent = nextItem.subject;
+        if (nextTimeRangeEl) nextTimeRangeEl.textContent = `${nextItem.start} - ${nextItem.end} WITA`;
+        if (nextTeacherEl) nextTeacherEl.textContent = nextItem.teacher || '-';
+        
+        const nextStart = parseTimeToMinutes(nextItem.start);
+        const timeToNext = nextStart - currentMinutes;
+        // If timeToNext is negative (overlap or immediate), show 0
+        if (nextInEl) nextInEl.textContent = `${Math.max(0, timeToNext)} Menit`;
+      } else {
+        // No next class today
+        setNoNextClass(nextSubjectEl, nextTimeRangeEl, nextTeacherEl, nextInEl);
+      }
+      break;
+    } 
+    // If we haven't found current yet, and this class is in the future
+    else if (!foundCurrent && currentMinutes < startMin) {
+        // This means we are BEFORE this class (break or before school)
+        // Current: "Istirahat" or "Menunggu Kelas" could be inferred, 
+        //   but strictly based on data, if we are in a gap, we are 'not in class'.
+        //   However, 'scheduleData' usually covers gaps with "Istirahat".
+        //   If we are here, it means we are in a gap NOT covered by scheduleData OR before the first class.
+        
+        // Let's assume this coming class is the "Next" one.
+        if (nextSubjectEl) nextSubjectEl.textContent = item.subject;
+        if (nextTimeRangeEl) nextTimeRangeEl.textContent = `${item.start} - ${item.end} WITA`;
+        if (nextTeacherEl) nextTeacherEl.textContent = item.teacher || '-';
+        const timeToNext = startMin - currentMinutes;
+        if (nextInEl) nextInEl.textContent = `${timeToNext} Menit`;
+
+        // Current status
+        if (currentSubjectEl) currentSubjectEl.textContent = "Tidak Ada Pelajaran / Istirahat";
+        if (currentTimeRangeEl) currentTimeRangeEl.textContent = "-";
+        if (currentTeacherEl) currentTeacherEl.textContent = "-";
+        if (timeLeftEl) timeLeftEl.textContent = "-";
+        if (progressFillEl) progressFillEl.style.width = "0%";
+        
+        foundCurrent = true; // Handled state
+        break;
+    }
+  }
+
+  if (!foundCurrent) {
+    // End of day
+    if (currentSubjectEl) currentSubjectEl.textContent = "Selesai (Pulang)";
+    if (currentTimeRangeEl) currentTimeRangeEl.textContent = "-";
+    if (currentTeacherEl) currentTeacherEl.textContent = "-";
+    if (timeLeftEl) timeLeftEl.textContent = "-";
+    if (progressFillEl) progressFillEl.style.width = "100%"; // Full progress for done
+
+    setNoNextClass(nextSubjectEl, nextTimeRangeEl, nextTeacherEl, nextInEl);
+  }
+}
+
+function setNoNextClass(subj, time, teacher, textIn) {
+    if (subj) subj.textContent = "Besok";
+    if (time) time.textContent = "-";
+    if (teacher) teacher.textContent = "-";
+    if (textIn) textIn.textContent = "-";
 }
 
 // Update day button indicators (green for today, red for others)
