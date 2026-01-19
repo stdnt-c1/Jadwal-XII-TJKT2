@@ -10,25 +10,39 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="darkmode.css">
 </head>
 <body class="min-h-screen bg-white text-gray-900">
   <!-- Header Section -->
-  <header class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-8 px-4">
-    <div class="container mx-auto text-center">
-      <h1 class="text-2xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-        JADWAL KELAS XII TJKT 2
-      </h1>
-      <p class="text-sm mt-2 text-indigo-100">SMKN 7 Samarinda</p>
-      <!-- WITA Clock Display -->
-      <div class="mt-4 inline-flex items-center bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3">
-        <i class="fas fa-clock mr-3 text-xl"></i>
-        <div class="text-left">
-          <p id="clock-date" class="text-sm font-medium opacity-90">Memuat tanggal...</p>
-          <p id="clock-time" class="text-2xl font-bold tracking-wider">--:--:--</p>
+  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6 px-4 relative overflow-hidden">
+    <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between relative">
+      <div class="order-2 sm:order-1 w-full sm:w-auto flex-1 flex justify-center">
+        <div class="text-center pt-4 sm:pt-0">
+          <h1 class="text-2xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+            JADWAL KELAS XII TJKT 2
+          </h1>
+          <p class="text-sm mt-1 text-indigo-100">SMKN 7 Samarinda</p>
         </div>
+      </div>
+      <!-- Theme Toggle Button -->
+      <div class="order-1 sm:order-2 w-full sm:w-auto flex justify-end absolute sm:static top-0 right-0 mt-2 mr-2 sm:mt-0 sm:mr-0">
+        <button id="theme-toggle" class="p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-300 border border-white/20">
+          <i class="fas fa-moon text-white text-xl" id="theme-icon"></i>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Current Time Display - Prominent Section -->
+  <div class="clock-section bg-white py-6 shadow-lg">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col items-center">
+        <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Waktu Sekarang (WITA)</p>
+        <p id="clock-time" class="clock-time text-5xl md:text-6xl font-bold text-gray-800 tracking-tight mt-1">--:--:--</p>
+        <p id="clock-date" class="text-gray-600 mt-1">Memuat tanggal...</p>
+      </div>
+    </div>
+  </div>
 
   <main class="container mx-auto px-4 py-8"><!-- Weekly Schedule Section -->
     <div>
@@ -36,17 +50,15 @@
         <i class="far fa-calendar-alt mr-2 text-blue-600"></i> Jadwal Mingguan
       </h3>
       
-      <!-- Day Navigation -->
-      <div class="day-nav-container border-2 border-gray-200 rounded-xl p-3 mb-4">
-        <div class="grid grid-cols-4 sm:grid-cols-7 gap-2">
-          <button class="day-btn px-3 py-2 rounded-lg bg-indigo-100 text-indigo-700 font-medium active-day flex items-center justify-center text-sm" data-day="0"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Senin</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm" data-day="1"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Selasa</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm" data-day="2"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Rabu</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm" data-day="3"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Kamis</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm" data-day="4"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Jumat</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm" data-day="5"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Sabtu</button>
-          <button class="day-btn px-3 py-2 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center justify-center text-sm col-span-2 sm:col-span-1" data-day="6"><span class="day-indicator hidden sm:inline-block w-2 h-2 rounded-full mr-2 bg-red-500"></span>Minggu</button>
-        </div>
+      <!-- Day Navigation - Horizontal Scrollable -->
+      <div class="day-nav-container flex overflow-x-auto mb-4 pb-2 gap-2 scroll-smooth snap-x snap-mandatory">
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-indigo-100 text-indigo-700 font-medium active-day flex items-center snap-start" data-day="0"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Senin</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="1"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Selasa</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="2"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Rabu</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="3"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Kamis</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="4"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Jumat</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="5"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Sabtu</button>
+        <button class="day-btn flex-shrink-0 px-4 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-medium flex items-center snap-start" data-day="6"><span class="day-indicator w-2 h-2 rounded-full mr-2 bg-red-500"></span>Minggu</button>
       </div>
       
       <!-- Schedule Content -->

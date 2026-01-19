@@ -1,0 +1,255 @@
+/* === Dark Mode Styles === */
+/* Enhanced dark theme with depth and glow effects from RyuHiiragi's design */
+
+/* Theme transition animation */
+.dark {
+  animation: themeFadeIn 0.3s ease-out;
+}
+
+@keyframes themeFadeIn {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Base styles for dark mode */
+body.dark {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* Header gradient for dark mode - deeper, richer purple */
+.dark header.bg-gradient-to-r {
+  background: linear-gradient(135deg, #312e81 0%, #4c1d95 100%) !important;
+}
+
+/* Clock display in header */
+.dark .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* === Clock Section Dark Mode === */
+.dark .clock-section {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .clock-time {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Container backgrounds for dark mode */
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+.dark #schedule-content {
+  background-color: #1e293b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Text colors for dark mode with better contrast */
+.dark .text-gray-900 { color: #ffffff !important; }
+.dark .text-gray-800 { color: #f1f5f9 !important; }
+.dark .text-gray-700 { color: #e2e8f0 !important; }
+.dark .text-gray-600 { color: #cbd5e1 !important; }
+.dark .text-gray-500 { color: #94a3b8 !important; }
+.dark .text-gray-400 { color: #64748b !important; }
+
+.dark p {
+  color: #cbd5e1;
+}
+
+/* Section headings */
+.dark h3.text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+/* Day navigation container */
+.dark .day-nav-container {
+  border-color: #334155;
+  background-color: transparent;
+}
+
+/* Day navigation scrollbar for dark mode */
+@media (min-width: 640px) {
+  .dark .day-nav-container {
+    scrollbar-color: #475569 transparent;
+  }
+  
+  .dark .day-nav-container::-webkit-scrollbar-thumb {
+    background-color: #475569;
+  }
+  
+  .dark .day-nav-container::-webkit-scrollbar-thumb:hover {
+    background-color: #64748b;
+  }
+}
+
+/* Day buttons for dark mode */
+.dark .day-btn {
+  background-color: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+.dark .day-btn:hover {
+  background-color: #475569;
+}
+
+.dark .day-btn.active-day {
+  background-color: #4338ca !important;
+  color: #ffffff !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+/* Schedule day cards with glow effects */
+.dark .schedule-day {
+  background-color: #1e293b;
+  border-color: #334155;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .schedule-day:hover {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+  background-color: #293548;
+  transform: translateY(-2px) scale(1.01);
+}
+
+.dark .active-day {
+  background-color: #312e81;
+  border-left: 4px solid #6366f1;
+}
+
+/* Current schedule highlight in dark mode - enhanced glow */
+.dark .current-schedule-highlight {
+  border-color: #22c55e !important;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.25) 100%) !important;
+  animation: darkGreenGlowPulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes darkGreenGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4),
+                0 0 30px rgba(34, 197, 94, 0.2),
+                0 0 45px rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.6),
+                0 0 40px rgba(34, 197, 94, 0.4),
+                0 0 60px rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* Break periods in dark mode */
+.dark .schedule-day.bg-gray-50 {
+  background-color: #1a2332;
+}
+
+.dark .schedule-day .bg-gray-200 {
+  background-color: #374151;
+  color: #f1f5f9 !important;
+}
+
+/* Current period highlight in dark mode */
+.dark .schedule-day.bg-indigo-50 {
+  background-color: #312e81;
+}
+
+/* Progress bar for dark mode */
+.dark .progress-bar {
+  background-color: #334155;
+}
+
+.dark .progress-fill {
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.dark .progress-fill::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+/* Uniform schedule section */
+.dark .bg-gray-50 {
+  background-color: #1a2332;
+  transition: background-color 0.3s ease;
+}
+
+.dark .bg-gray-50:hover {
+  background-color: #253041 !important;
+}
+
+.dark .bg-gray-200 {
+  background-color: #475569;
+}
+
+/* Footer */
+.dark footer.bg-gray-50 {
+  background-color: #0f172a;
+  border-top: 1px solid #1e293b;
+}
+
+.dark footer .text-gray-500,
+.dark footer .text-gray-400 {
+  color: #64748b !important;
+}
+
+.dark footer .border-gray-200 {
+  border-color: #334155;
+}
+
+/* Theme toggle button animation */
+.dark #theme-toggle {
+  animation: spin 0.5s ease-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(-180deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
+
+/* Mobile block status for day buttons in dark mode */
+@media (max-width: 639px) {
+  .dark .day-btn.today-block {
+    background-color: #14532d !important;
+    color: #86efac !important;
+    border: 1.5px solid #22c55e !important;
+  }
+  
+  .dark .day-btn.today-block.active-day {
+    background-color: #166534 !important;
+    border-color: #4ade80 !important;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+  }
+  
+  .dark .day-btn.other-day-block {
+    border: 1.5px solid #7f1d1d !important;
+    background-color: #1f2937 !important;
+    color: #fecaca !important;
+  }
+  
+  .dark .day-btn.other-day-block.active-day {
+    border-color: #6366f1 !important;
+    background-color: #312e81 !important;
+    color: #c7d2fe !important;
+  }
+}
+
+/* Notification styling in dark mode */
+.dark #notification-container .bg-white {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+}
