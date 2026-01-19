@@ -171,26 +171,61 @@ body.dark {
   border-left: 4px solid #6366f1;
 }
 
-/* Current schedule highlight in dark mode - enhanced glow */
+/* Current schedule highlight in dark mode - smooth left-to-right gradient glow */
 .dark .current-schedule-highlight,
 .dark .schedule-day.current-schedule-highlight,
 .dark .schedule-item.current-schedule-highlight {
-  border-color: #22c55e !important;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.15) 100%) !important;
-  animation: darkGreenGlowPulse 2s ease-in-out infinite;
+  border: none !important;
   position: relative;
+  overflow: hidden;
+  animation: darkHighlightGlowPulse 2.5s ease-in-out infinite;
 }
 
-@keyframes darkGreenGlowPulse {
+.dark .current-schedule-highlight::before,
+.dark .schedule-day.current-schedule-highlight::before,
+.dark .schedule-item.current-schedule-highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(34, 197, 94, 0.35) 0%, 
+    rgba(74, 222, 128, 0.2) 25%,
+    rgba(16, 185, 129, 0.12) 50%,
+    rgba(52, 211, 153, 0.05) 75%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .current-schedule-highlight::after,
+.dark .schedule-day.current-schedule-highlight::after,
+.dark .schedule-item.current-schedule-highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, 
+    #22c55e 0%, 
+    #4ade80 50%, 
+    #22c55e 100%);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.8),
+              0 0 30px rgba(34, 197, 94, 0.5),
+              0 0 45px rgba(34, 197, 94, 0.3);
+  z-index: 1;
+}
+
+@keyframes darkHighlightGlowPulse {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4),
-                0 0 30px rgba(34, 197, 94, 0.2),
-                0 0 45px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.3),
+                0 0 30px rgba(34, 197, 94, 0.15),
+                inset 0 0 25px rgba(34, 197, 94, 0.08);
   }
   50% {
-    box-shadow: 0 0 25px rgba(34, 197, 94, 0.6),
-                0 0 40px rgba(34, 197, 94, 0.4),
-                0 0 60px rgba(34, 197, 94, 0.2);
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.5),
+                0 0 45px rgba(34, 197, 94, 0.25),
+                inset 0 0 40px rgba(34, 197, 94, 0.15);
   }
 }
 
