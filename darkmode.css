@@ -49,7 +49,8 @@ body.dark {
 .dark .current-class,
 .dark .next-class,
 .dark .bg-white {
-  background-color: #1e293b;
+  background: #1e293b; /* Use shorthand to override any background-image/gradients from light mode */
+  border-color: #334155;
 }
 
 .dark .current-class {
@@ -65,8 +66,9 @@ body.dark {
 }
 
 .dark #schedule-content {
-  background-color: #1e293b;
+  background: #1e293b; /* Remove light mode gradient */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-color: #334155;
 }
 
 /* Text colors for dark mode with better contrast */
@@ -193,13 +195,16 @@ body.dark {
 }
 
 /* Uniform schedule section */
-.dark .bg-gray-50 {
-  background-color: #1a2332;
+.dark .bg-gray-50,
+.dark .container .bg-gray-50 {
+  background: #1a2332; /* Remove light mode gradient */
   transition: background-color 0.3s ease;
+  border-color: #334155;
 }
 
-.dark .bg-gray-50:hover {
-  background-color: #253041 !important;
+.dark .bg-gray-50:hover,
+.dark .container .bg-gray-50:hover {
+  background: #253041 !important;
 }
 
 .dark .bg-gray-200 {
@@ -208,7 +213,7 @@ body.dark {
 
 /* Footer */
 .dark footer.bg-gray-50 {
-  background-color: #0f172a;
+  background: #0f172a; /* Remove light mode gradient */
   border-top: 1px solid #1e293b;
 }
 
