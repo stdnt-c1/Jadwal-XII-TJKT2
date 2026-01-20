@@ -374,6 +374,15 @@ body.dark {
   color: #475569 !important;
 }
 
+/* Assignment toggle button in dark mode */
+.dark .assignment-toggle-btn {
+  color: #60a5fa !important;
+}
+
+.dark .assignment-toggle-btn:hover {
+  color: #93c5fd !important;
+}
+
 /* Footer */
 .dark footer.bg-gray-50 {
   background: #0f172a; /* Remove light mode gradient */

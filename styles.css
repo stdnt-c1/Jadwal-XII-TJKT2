@@ -586,6 +586,52 @@ p {
   50% { opacity: 0.7; }
 }
 
+/* Assignment text truncation */
+.assignment-title-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assignment-details-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Assignment card expanded state */
+.assignment-card.expanded .assignment-title,
+.assignment-card.expanded .assignment-details {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+/* Toggle button styling */
+.assignment-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.assignment-toggle-btn:hover {
+  text-decoration: underline;
+}
+
+.assignment-toggle-btn .toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+.assignment-card.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
 /* === Footer Enhancement === */
 footer.bg-gray-50 {
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);

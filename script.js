@@ -677,7 +677,7 @@ function renderAssignments(assignments, container) {
   
   const now = new Date();
   
-  assignments.forEach(assignment => {
+  assignments.forEach((assignment, index) => {
     const deadline = new Date(assignment.deadline);
     const dateGiven = new Date(assignment.dateGiven);
     const isExpired = assignment.status === 'expired';
@@ -696,8 +696,14 @@ function renderAssignments(assignments, container) {
       statusText = daysLeft === 0 ? 'Hari ini!' : `${daysLeft} hari lagi`;
     }
     
+    // Check if content is long enough to need "see more"
+    const hasLongTitle = assignment.title.length > 50;
+    const hasDetails = assignment.details && assignment.details.length > 0;
+    const needsSeeMore = hasLongTitle || hasDetails;
+    
     const card = document.createElement('div');
     card.className = `assignment-card ${isExpired ? 'expired' : ''}`;
+    card.dataset.index = index;
     card.innerHTML = `
       <div class="flex items-start justify-between gap-3">
         <div class="flex-1 min-w-0">
@@ -705,8 +711,8 @@ function renderAssignments(assignments, container) {
             <span class="assignment-subject text-sm font-semibold text-amber-700">${escapeHtml(assignment.subject)}</span>
             <span class="assignment-status ${statusClass}">${statusText}</span>
           </div>
-          <h4 class="assignment-title font-medium text-gray-800 truncate">${escapeHtml(assignment.title)}</h4>
-          ${assignment.details ? `<p class="assignment-details text-sm text-gray-600 mt-1 line-clamp-2">${escapeHtml(assignment.details)}</p>` : ''}
+          <h4 class="assignment-title font-medium text-gray-800 ${needsSeeMore ? 'assignment-title-truncate' : ''}">${escapeHtml(assignment.title)}</h4>
+          ${hasDetails ? `<p class="assignment-details text-sm text-gray-600 mt-1 ${needsSeeMore ? 'assignment-details-truncate' : ''}">${escapeHtml(assignment.details)}</p>` : ''}
         </div>
       </div>
       <div class="assignment-meta flex items-center gap-4 mt-3 text-xs text-gray-500">
@@ -714,10 +720,78 @@ function renderAssignments(assignments, container) {
         <span><i class="fas fa-calendar-plus mr-1"></i>${formatDate(dateGiven)}</span>
         <span><i class="fas fa-calendar-check mr-1"></i>${formatDate(deadline)}</span>
       </div>
+      ${needsSeeMore ? `
+      <button class="assignment-toggle-btn mt-3 text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors">
+        <span class="toggle-text">Lihat selengkapnya</span>
+        <i class="fas fa-chevron-down toggle-icon text-xs"></i>
+      </button>
+      ` : ''}
     `;
+    
+    // Add click handler for toggle button
+    if (needsSeeMore) {
+      const toggleBtn = card.querySelector('.assignment-toggle-btn');
+      toggleBtn.addEventListener('click', () => toggleAssignmentExpand(card));
+    }
     
     container.appendChild(card);
   });
+}
+
+// Toggle assignment expand/collapse with accordion behavior
+function toggleAssignmentExpand(clickedCard) {
+  const allCards = document.querySelectorAll('.assignment-card');
+  const isExpanding = !clickedCard.classList.contains('expanded');
+  
+  // Collapse all other cards first
+  allCards.forEach(card => {
+    if (card !== clickedCard && card.classList.contains('expanded')) {
+      card.classList.remove('expanded');
+      const title = card.querySelector('.assignment-title');
+      const details = card.querySelector('.assignment-details');
+      const toggleText = card.querySelector('.toggle-text');
+      const toggleIcon = card.querySelector('.toggle-icon');
+      
+      if (title) title.classList.add('assignment-title-truncate');
+      if (details) details.classList.add('assignment-details-truncate');
+      if (toggleText) toggleText.textContent = 'Lihat selengkapnya';
+      if (toggleIcon) {
+        toggleIcon.classList.remove('fa-chevron-up');
+        toggleIcon.classList.add('fa-chevron-down');
+      }
+    }
+  });
+  
+  // Toggle clicked card
+  if (isExpanding) {
+    clickedCard.classList.add('expanded');
+    const title = clickedCard.querySelector('.assignment-title');
+    const details = clickedCard.querySelector('.assignment-details');
+    const toggleText = clickedCard.querySelector('.toggle-text');
+    const toggleIcon = clickedCard.querySelector('.toggle-icon');
+    
+    if (title) title.classList.remove('assignment-title-truncate');
+    if (details) details.classList.remove('assignment-details-truncate');
+    if (toggleText) toggleText.textContent = 'Lihat lebih sedikit';
+    if (toggleIcon) {
+      toggleIcon.classList.remove('fa-chevron-down');
+      toggleIcon.classList.add('fa-chevron-up');
+    }
+  } else {
+    clickedCard.classList.remove('expanded');
+    const title = clickedCard.querySelector('.assignment-title');
+    const details = clickedCard.querySelector('.assignment-details');
+    const toggleText = clickedCard.querySelector('.toggle-text');
+    const toggleIcon = clickedCard.querySelector('.toggle-icon');
+    
+    if (title) title.classList.add('assignment-title-truncate');
+    if (details) details.classList.add('assignment-details-truncate');
+    if (toggleText) toggleText.textContent = 'Lihat selengkapnya';
+    if (toggleIcon) {
+      toggleIcon.classList.remove('fa-chevron-up');
+      toggleIcon.classList.add('fa-chevron-down');
+    }
+  }
 }
 
 function escapeHtml(text) {
