@@ -70,11 +70,21 @@ header .bg-white\/20 {
 }
 
 .marquee-content {
-  display: inline-flex;
+  display: flex;
   white-space: nowrap;
   animation: marqueeScroll 20s linear infinite;
   font-size: 0.875rem;
   color: #64748b;
+  width: max-content;
+}
+
+/* On desktop, stretch marquee content instead of scrolling */
+@media (min-width: 640px) {
+  .marquee-content {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .marquee-content strong {
