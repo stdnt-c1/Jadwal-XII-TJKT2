@@ -538,11 +538,31 @@ p {
   border-radius: 0.75rem;
   padding: 1rem;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .assignment-card:hover {
   box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
   transform: translateY(-1px);
+}
+
+/* Assignment header with status pinned top-right */
+.assignment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.assignment-header .assignment-subject {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.assignment-header .assignment-status {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* Expired Assignment */
@@ -588,9 +608,7 @@ p {
 
 /* Assignment text truncation */
 .assignment-title-truncate {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -604,7 +622,12 @@ p {
 }
 
 /* Assignment card expanded state */
-.assignment-card.expanded .assignment-title,
+.assignment-card.expanded .assignment-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
 .assignment-card.expanded .assignment-details {
   display: block;
   -webkit-line-clamp: unset;

@@ -696,25 +696,21 @@ function renderAssignments(assignments, container) {
       statusText = daysLeft === 0 ? 'Hari ini!' : `${daysLeft} hari lagi`;
     }
     
-    // Check if content is long enough to need "see more"
-    const hasLongTitle = assignment.title.length > 50;
-    const hasDetails = assignment.details && assignment.details.length > 0;
-    const needsSeeMore = hasLongTitle || hasDetails;
+    // Check if content will be truncated (title > 40 chars or details > 80 chars)
+    const titleTruncated = assignment.title.length > 40;
+    const detailsTruncated = assignment.details && assignment.details.length > 80;
+    const needsSeeMore = titleTruncated || detailsTruncated;
     
     const card = document.createElement('div');
     card.className = `assignment-card ${isExpired ? 'expired' : ''}`;
     card.dataset.index = index;
     card.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="assignment-subject text-sm font-semibold text-amber-700">${escapeHtml(assignment.subject)}</span>
-            <span class="assignment-status ${statusClass}">${statusText}</span>
-          </div>
-          <h4 class="assignment-title font-medium text-gray-800 ${needsSeeMore ? 'assignment-title-truncate' : ''}">${escapeHtml(assignment.title)}</h4>
-          ${hasDetails ? `<p class="assignment-details text-sm text-gray-600 mt-1 ${needsSeeMore ? 'assignment-details-truncate' : ''}">${escapeHtml(assignment.details)}</p>` : ''}
-        </div>
+      <div class="assignment-header">
+        <span class="assignment-subject text-sm font-semibold text-amber-700">${escapeHtml(assignment.subject)}</span>
+        <span class="assignment-status ${statusClass}">${statusText}</span>
       </div>
+      <h4 class="assignment-title font-medium text-gray-800 ${titleTruncated ? 'assignment-title-truncate' : ''}">${escapeHtml(assignment.title)}</h4>
+      ${assignment.details ? `<p class="assignment-details text-sm text-gray-600 mt-1 ${detailsTruncated ? 'assignment-details-truncate' : ''}">${escapeHtml(assignment.details)}</p>` : ''}
       <div class="assignment-meta flex items-center gap-4 mt-3 text-xs text-gray-500">
         <span><i class="fas fa-user-tie mr-1"></i>${escapeHtml(assignment.teacher || '-')}</span>
         <span><i class="fas fa-calendar-plus mr-1"></i>${formatDate(dateGiven)}</span>
@@ -748,6 +744,7 @@ function toggleAssignmentExpand(clickedCard) {
     if (card !== clickedCard && card.classList.contains('expanded')) {
       card.classList.remove('expanded');
       const title = card.querySelector('.assignment-title');
+      const details = card.querySelector('.assignment-details');
       const details = card.querySelector('.assignment-details');
       const toggleText = card.querySelector('.toggle-text');
       const toggleIcon = card.querySelector('.toggle-icon');
