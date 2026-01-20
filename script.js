@@ -127,6 +127,22 @@ function parseTimeToMinutes(timeStr) {
   return parseInt(parts[0]) * 60 + parseInt(parts[1]);
 }
 
+// Format minutes as "Xj Ym" (hours and minutes)
+function formatTimeLeft(totalMinutes) {
+  if (totalMinutes <= 0) return '0m';
+  
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  
+  if (hours > 0 && minutes > 0) {
+    return `${hours}j ${minutes}m`;
+  } else if (hours > 0) {
+    return `${hours}j`;
+  } else {
+    return `${minutes}m`;
+  }
+}
+
 // Check if current time is within a schedule item
 function isCurrentSchedule(classItem) {
   const wita = getWITATime();
@@ -229,7 +245,7 @@ function updateDashboard() {
       const timeLeft = endMin - currentMinutes;
 
       if (progressFillEl) progressFillEl.style.width = `${progress}%`;
-      if (timeLeftEl) timeLeftEl.textContent = `${timeLeft} Menit`;
+      if (timeLeftEl) timeLeftEl.textContent = formatTimeLeft(timeLeft);
 
       // Find Next Class
       if (i + 1 < todaySchedule.length) {
@@ -241,7 +257,7 @@ function updateDashboard() {
         const nextStart = parseTimeToMinutes(nextItem.start);
         const timeToNext = nextStart - currentMinutes;
         // If timeToNext is negative (overlap or immediate), show 0
-        if (nextInEl) nextInEl.textContent = `${Math.max(0, timeToNext)} Menit`;
+        if (nextInEl) nextInEl.textContent = formatTimeLeft(Math.max(0, timeToNext));
       } else {
         // No next class today
         setNoNextClass(nextSubjectEl, nextTimeRangeEl, nextTeacherEl, nextInEl);
@@ -744,7 +760,6 @@ function toggleAssignmentExpand(clickedCard) {
     if (card !== clickedCard && card.classList.contains('expanded')) {
       card.classList.remove('expanded');
       const title = card.querySelector('.assignment-title');
-      const details = card.querySelector('.assignment-details');
       const details = card.querySelector('.assignment-details');
       const toggleText = card.querySelector('.toggle-text');
       const toggleIcon = card.querySelector('.toggle-icon');
