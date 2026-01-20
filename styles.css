@@ -61,6 +61,40 @@ header .bg-white\/20 {
   text-shadow: none;
 }
 
+/* Credits Marquee */
+.credits-marquee {
+  overflow: hidden;
+  background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+  padding: 0.5rem 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.marquee-content {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marqueeScroll 20s linear infinite;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.marquee-content strong {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.credits-marquee:hover .marquee-content {
+  animation-play-state: paused;
+}
+
 /* Current Schedule Highlight with Smooth Left-to-Right Gradient Glow */
 .current-schedule-highlight {
   position: relative;

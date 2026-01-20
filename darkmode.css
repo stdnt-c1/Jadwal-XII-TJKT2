@@ -50,6 +50,20 @@ body.dark {
   background-clip: text;
 }
 
+/* Credits Marquee Dark Mode */
+.dark .credits-marquee {
+  background: linear-gradient(90deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
+  border-top: 1px solid #334155;
+}
+
+.dark .marquee-content {
+  color: #94a3b8;
+}
+
+.dark .marquee-content strong {
+  color: #818cf8;
+}
+
 /* Container backgrounds for dark mode */
 .dark .current-class,
 .dark .next-class,
